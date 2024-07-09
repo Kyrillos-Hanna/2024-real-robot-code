@@ -54,11 +54,11 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     
-   m_drivebase.setDefaultCommand(turnMotorButton(m_driverController.getLeftY()));
+   m_drivebase.setDefaultCommand(turnMotorButton());
   }
 
-  private Command turnMotorButton(double speed) {
-    return new RunCommand(() -> m_drivebase.setSpeed(speed));
+  private Command turnMotorButton() {
+    return new RunCommand(() -> m_drivebase.setSpeed(m_driverController.getLeftY()), m_drivebase);
   }
 
   /**
