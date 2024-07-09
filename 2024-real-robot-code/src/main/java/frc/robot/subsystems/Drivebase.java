@@ -12,7 +12,10 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 public class Drivebase extends SubsystemBase {
   /** Creates a new Drivebase. */
   public CANSparkMax m_motor = new CANSparkMax(2, MotorType.kBrushless);
-  public Drivebase() {}
+  public CANSparkMax m_2motor = new CANSparkMax(1, MotorType.kBrushless);
+  public Drivebase() {
+    m_2motor.follow(m_motor, true);
+  }
 
   /**
    * Example command factory method.
