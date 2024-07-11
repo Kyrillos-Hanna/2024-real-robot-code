@@ -5,16 +5,20 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-public class Drivebase extends SubsystemBase {
+public class Toaster extends SubsystemBase {
   /** Creates a new Drivebase. */
-  public CANSparkMax m_motor = new CANSparkMax(2, MotorType.kBrushless);
-  public CANSparkMax m_2motor = new CANSparkMax(1, MotorType.kBrushless);
-  public Drivebase() {
-    m_2motor.follow(m_motor, true);
+  private CANSparkMax m_wheelMotor = new CANSparkMax(2, MotorType.kBrushless);
+  private CANSparkMax m_2wheelMotor = new CANSparkMax(1, MotorType.kBrushless);
+  private CANSparkMax m_rollerMotor = new CANSparkMax(3, MotorType.kBrushless);
+  
+  public Toaster() {
+    m_2wheelMotor.follow(m_wheelMotor, true);
   }
 
   /**
@@ -31,8 +35,14 @@ public class Drivebase extends SubsystemBase {
         });
   }
 
-  public void setSpeed(double speed) {
-    m_motor.set(speed);
+  public void runMotors(double speed) {
+    m_wheelMotor.set(speed);
+    m_rollerMotor.set(speed);
+  }
+
+
+  public Command inTake(double speed) {
+    return this.run(() -> runMotors(speed));
   }
 
   /**
@@ -54,4 +64,5 @@ public class Drivebase extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
+
 }

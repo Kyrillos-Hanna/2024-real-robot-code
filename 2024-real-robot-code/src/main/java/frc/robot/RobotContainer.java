@@ -11,8 +11,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.TurnMotor;
-import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.Toaster;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
@@ -23,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivebase m_drivebase = new Drivebase();
+  private final Toaster m_toaster = new Toaster();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -54,12 +53,15 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     
-   m_drivebase.setDefaultCommand(turnMotorButton());
+   m_driverController.a().whileTrue(m_toaster.inTake(-0.5));
+   m_driverController.b().whileTrue(m_toaster.inTake(0.5));
+    m_toaster.setDefaultCommand(m_toaster.inTake(0));
+
   }
 
-  private Command turnMotorButton() {
-    return new RunCommand(() -> m_drivebase.setSpeed(m_driverController.getLeftY()), m_drivebase);
-  }
+  // private Command turnMotorButton() {
+  //   return new RunCommand(() -> m_toaster.runMotors(m_driverController.getLeftY()), m_toaster);
+  // }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
