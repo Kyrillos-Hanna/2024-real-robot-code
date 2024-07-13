@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Board;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -24,6 +25,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Toaster m_toaster = new Toaster();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final Board m_board = new Board();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -56,6 +58,10 @@ public class RobotContainer {
    m_driverController.a().whileTrue(m_toaster.inTake(-0.5));
    m_driverController.b().whileTrue(m_toaster.inTake(0.5));
     m_toaster.setDefaultCommand(m_toaster.inTake(0));
+
+  m_board.setDefaultCommand(m_board.turnOffMotors());
+  m_driverController.x().whileTrue(m_board.setSpeedCAN(0.5));
+  m_driverController.y().whileTrue(m_board.setSpeedPWM(0.5));
 
   }
 
